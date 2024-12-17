@@ -37,5 +37,4 @@ urlpatterns = [
         	path('api/departmnt/',include('department.urls')),
             path('api/Attendance/',include('Attendance.urls'))
 
-
     ]       
