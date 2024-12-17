@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.exceptions import APIException
 from rest_framework.response import Response
 from rest_framework import status,parsers
-from rest_framework.decorators import action
+# from rest_framework.decorators import action
 
 # Create your views here.
 class AttendanceViewSet(ModelViewSet):

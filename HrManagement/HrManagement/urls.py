@@ -21,7 +21,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.conf.urls.static import static
 from django.conf import settings
-from rest_framework_simplejwt.views import (TokenObtainPairView,TokenRefreshView,)
+# from rest_framework_simplejwt.views import (TokenObtainPairView,TokenRefreshView,)
 from drf_yasg.utils import swagger_auto_schema
 
 schema_view = get_schema_view(
@@ -34,40 +34,18 @@ schema_view = get_schema_view(
       license=openapi.License(name="BSD License"),
    ),
    public=True,
-   authentication_classes=(authentication.JWTAuthentication,),
-   permission_classes=(permissions.AllowAny,),
+#    authentication_classes=(authentication.JWTAuthentication,),
+#    permission_classes=(permissions.AllowAny,),
 )
-
-from django.urls import path,include
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
-from django.conf.urls.static import static
-from django.conf import settings
-
-schema_view = get_schema_view(
-   openapi.Info(
-      title="Deparment API",
-      default_version='v1',
-      description="Department API Management",
-      terms_of_service="https://127.0.0.1:8000",
-      contact=openapi.Contact(email="suchitra@gmail.com"),
-      license=openapi.License(name="BSD License"),
-    ),
-   	public=True,
-	)	
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/',include('user.urls')),
-    path('employee/',include('employee.urls')),
-
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('api/token/', swagger_auto_schema(methods=['post'],security=[])(TokenObtainPairView.as_view())),
-    path('api/token/refresh/', swagger_auto_schema(methods=['post'],security=[])(TokenRefreshView.as_view()))
-]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
-        	path('admin/', admin.site.urls),
-        	path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-        	path('api/departmnt/',include('department.urls')),
-            path('api/Attendance/',include('Attendance.urls'))
+    path('departmnt/',include('department.urls')),
+    path('Attendance/',include('Attendance.urls')),
+    
+]
+# +static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+        	
 
 
-    ]       
+          
