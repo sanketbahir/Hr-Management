@@ -1,72 +1,49 @@
+# from rest_framework import serializers
+# from .models import User
+
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields="__all__"
+#         read_only_fields =['id']
+
 from rest_framework import serializers
-from .models import CustomUser
+from user.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'email', 'role', 'is_active', 'date_joined', 'last_login']
-        extra_kwargs = {
-            'is_active': {'read_only': True},
-            'date_joined': {'read_only': True},
-            'last_login': {'read_only': True},
-        }
-
+        model = User
+        fields = ["id", "username", "password", "role","email","is_active","date_joined"]
 
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
-        validators=[UniqueValidator(queryset=CustomUser.objects.all())]
+        validators=[UniqueValidator(queryset=User.objects.all())]
     )
     password = serializers.CharField(
-        write_only=True,
-        required=True,
-        validators=[validate_password]
+        write_only=True, required=True, validators=[validate_password]
     )
-    password2 = serializers.CharField(
-        write_only=True,
-        required=True
-    )
-    role = serializers.ChoiceField(
-        choices=[('Admin', 'Admin'), ('Employee', 'Employee')],
-        required=True
-    )
-    username = serializers.CharField(
-        required=True,
-        validators=[UniqueValidator(queryset=CustomUser.objects.all())]
-    )
-    # Make these fields visible in the Swagger UI
-    is_active = serializers.BooleanField(
-        required=False,
-        default=True
-    )
-    date_joined = serializers.DateTimeField(
-        read_only=True,
-        default=True
-    )
-    last_login = serializers.DateTimeField(
-        read_only=True,
-        default=True
-    )
+    password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
-        model = CustomUser
-        fields = ['id', 'username', 'email', 'password', 'password2', 'role', 'is_active', 'date_joined', 'last_login']
+        model = User
+        fields = ('username', 'password', 'password2', 'role', 'email', 'is_active')
 
     def validate(self, attrs):
+        # Ensure passwords match
         if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Passwords do not match."})
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
         return attrs
 
     def create(self, validated_data):
-        user = CustomUser(
+        user = User.objects.create(
             username=validated_data['username'],
             email=validated_data['email'],
             role=validated_data['role'],
-            is_active=validated_data.get('is_active', True)  # Default value if not provided
-        )
-        user.set_password(validated_data['password'])  # Hashes the password
+            is_active=validated_data.get('is_active', True),
+    )
+        user.set_password(validated_data['password'])  # Now this will work
         user.save()
         return user

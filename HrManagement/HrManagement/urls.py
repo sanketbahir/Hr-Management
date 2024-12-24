@@ -37,13 +37,16 @@ schema_view = get_schema_view(
    authentication_classes=(authentication.JWTAuthentication,),
    permission_classes=(permissions.AllowAny,),
 )
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/',include('user.urls')),
-    path('employee/',include('employee.urls')),
-
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('departmnt/',include('department.urls')),
+    path('Attendance/',include('Attendance.urls')),
+    path('employee/',include('employee.urls')),
+    path('user/',include('user.urls')),
     path('api/token/', swagger_auto_schema(methods=['post'],security=[])(TokenObtainPairView.as_view())),
-    path('api/token/refresh/', swagger_auto_schema(methods=['post'],security=[])(TokenRefreshView.as_view()))
+    path('api/token/refresh/',swagger_auto_schema(methods=['post'],security=[])(TokenRefreshView.as_view())),
+
+    
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+        	

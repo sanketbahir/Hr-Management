@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,14 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'drf_yasg', 
-    'user',  
-    'rest_framework',  
-    'rest_framework_simplejwt',  
-    'employee'
+    'drf_yasg',
+    'rest_framework',
+    'department',
+    'Attendance',
+    'employee',
+    'user',
+    'rest_framework_simplejwt'
+
+    
 ]
 
-AUTH_USER_MODEL = 'user.CustomUser'
+AUTH_USER_MODEL = 'user.User' 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -111,8 +117,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
+    # Internationalization
+    # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -135,26 +141,30 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-REST_FRAMEWORK = {
-
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
-}
+# SWAGGER_SETTINGS = {
+#     'SECURITY_DEFINITIONS': {
+#          'basic': {
+#              'type': 'basic'
+#          }
+#      },
+# }
 
 SWAGGER_SETTINGS = {
-    'USE_SESSION_AUTH': False,
-    'SECURITY_DEFINITIONS': {
-        'Bearer': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header'
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "JWT Authorization header using the Bearer scheme. Example: 'Bearer {your JWT token}'",
         }
     }
 }
 
-from datetime import timedelta
-...
+
+
+import os
+MEDIA_ROOT = os.path.join(BASE_DIR,'uploads')
+MEDIA_URL = '/uploads/'
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
@@ -195,7 +205,3 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
-
-import os 
-MTDIA_ROOT = os.path.join(BASE_DIR,'uploads')
-MEDIA_URL = '/uploads/'
