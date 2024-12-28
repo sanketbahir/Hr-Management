@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'department',
+<<<<<<< HEAD
     'Attendance',
     'employee',
     'user',
@@ -52,6 +53,12 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'user.User' 
 
+=======
+    'Attendance'
+    
+]
+
+>>>>>>> fd6d0b8c5e27194f5f4161022f1ccf50c9d23821
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -141,6 +148,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+<<<<<<< HEAD
 # SWAGGER_SETTINGS = {
 #     'SECURITY_DEFINITIONS': {
 #          'basic': {
@@ -205,3 +213,13 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+=======
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+         'basic': {
+             'type': 'basic'
+         }
+     },
+}
+
+>>>>>>> fd6d0b8c5e27194f5f4161022f1ccf50c9d23821

@@ -21,7 +21,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from django.conf.urls.static import static
 from django.conf import settings
-from rest_framework_simplejwt.views import (TokenObtainPairView,TokenRefreshView,)
+# from rest_framework_simplejwt.views import (TokenObtainPairView,TokenRefreshView,)
 from drf_yasg.utils import swagger_auto_schema
 
 schema_view = get_schema_view(
@@ -34,14 +34,15 @@ schema_view = get_schema_view(
       license=openapi.License(name="BSD License"),
    ),
    public=True,
-   authentication_classes=(authentication.JWTAuthentication,),
-   permission_classes=(permissions.AllowAny,),
+#    authentication_classes=(authentication.JWTAuthentication,),
+#    permission_classes=(permissions.AllowAny,),
 )
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('departmnt/',include('department.urls')),
     path('Attendance/',include('Attendance.urls')),
+<<<<<<< HEAD
     path('employee/',include('employee.urls')),
     path('user/',include('user.urls')),
     path('api/token/', swagger_auto_schema(methods=['post'],security=[])(TokenObtainPairView.as_view())),
@@ -50,3 +51,16 @@ urlpatterns = [
     
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
         	
+=======
+    
+]
+# +static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+        	
+
+<<<<<<< HEAD
+
+          
+=======
+    ]       
+>>>>>>> suchitra
+>>>>>>> fd6d0b8c5e27194f5f4161022f1ccf50c9d23821
